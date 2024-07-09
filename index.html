@@ -3,99 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Data Chart</title>
+    <title>PEVER Pi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #121212;
-            color: gold;
-            font-family: Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 300px;
+            background-color: #111111;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin: 0;
+        }
+        .main-content {
+            flex-grow: 1;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        h1 {
+            color: #FFD700;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
         }
         .form-container {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 270px;
-            text-align: center;
-            margin-bottom: 20px;
+            background-color: #1a1a1a;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .form-container h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        .form-container label {
+        label {
             display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
+            margin-bottom: 5px;
+            color: #FFD700;
         }
-        .form-container input, .form-container select {
+        input, select {
+            width: 95%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+        .inline-inputs {
+            display: flex;
+            justify-content: space-between;
+        }
+        .inline-inputs input {
+            width: 83%;
+        }
+        button {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
+            background-color: #FFD700;
+            color: #0a0a0a;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
-        }
-        .form-container button {
-            padding: 10px 20px;
-            background-color: gold;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #FFC900;
         }
         .chart-container {
-            width: 80%;
-            max-width: 800px;
-            margin-top: 20px;
+            flex-grow: 1;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
         }
         #stockChart {
-            background-color: #1e1e1e;
-            border-radius: 15px;
-            padding: 20px;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h1>Get Stock Data</h1>
-        <form id="stockForm">
-            <label for="symbol">Stock Symbol:</label>
-            <input type="text" id="symbol" name="symbol" required>
+    <div class="sidebar">
+        <h1>PEVER Pi</h1>
+        <div class="form-container">
+            <form id="stockForm">
+                <label for="symbol">STOCK NAME:</label>
+                <input type="text" id="symbol" name="symbol" required>
 
-            <label for="resolution">Resolution:</label>
-            <select id="resolution" name="resolution" required>
-                <option value="1D">1 Day</option>
-                
-            </select>
+                <label for="resolution">Resolution:</label>
+                <select id="resolution" name="resolution" required>
+                    <option value="1">1 Minute</option>
+                    <option value="3">3 Minutes</option>
+                    <option value="5">5 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                    <option value="1H">1 Hour</option>
+                    <option value="1D">1 Day</option>
+                </select>
 
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" name="startDate" required>
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" required>
 
-            <label for="startTime">Start Time:</label>
-            <input type="time" id="startTime" name="startTime" required>
+                <div class="inline-inputs">
+                    <div>
+                        <label for="startTime">Start Time:</label>
+                        <input type="time" id="startTime" name="startTime">
+                    </div>
+                    <div>
+                        <label for="endTime">End Time:</label>
+                        <input type="time" id="endTime" name="endTime">
+                    </div>
+                </div>
 
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" name="endDate" required>
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" required>
 
-            <label for="endTime">End Time:</label>
-            <input type="time" id="endTime" name="endTime" required>
-
-            <button type="submit">Get Data</button>
-        </form>
+                <button type="submit">Get Data</button>
+            </form>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="chart-container">
+            <div id="stockChart"></div>
+        </div>
     </div>
 
-    <div class="chart-container">
-        <canvas id="stockChart"></canvas>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
+        function getTimestampFromInput(date, time) {
+            let datetimeStr = date;
+            if (time) {
+                datetimeStr += `T${time}:00`;
+            } else {
+                datetimeStr += 'T00:00:00';
+            }
+            return new Date(datetimeStr).getTime() / 1000;
+        }
+
         function convertResolutionToMinutes(resolution) {
             if (resolution.endsWith('H')) {
                 return parseInt(resolution) * 60;
@@ -106,9 +158,24 @@
             }
         }
 
-        document.getElementById('stockForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        function isWithinTradingHours(timestamp) {
+            const date = new Date(timestamp * 1000);
 
+            // Convert UTC time to IST (Indian Standard Time)
+            const hoursIST = (date.getUTCHours() + 5) % 24; // Convert UTC to IST hours
+            const minutesIST = (date.getUTCMinutes() + 30) % 60; // Convert UTC to IST minutes
+
+            // Get total minutes in IST
+            const timeIST = hoursIST * 60 + minutesIST;
+
+            // Define trading hours in IST
+            const start = 9 * 60 + 15; // 09:15 in minutes
+            const end = 15 * 60 + 30; // 15:30 in minutes
+
+            return timeIST >= start && timeIST <= end;
+        }
+
+        function fetchData() {
             const symbol = document.getElementById('symbol').value;
             const resolution = document.getElementById('resolution').value;
             const startDate = document.getElementById('startDate').value;
@@ -116,156 +183,117 @@
             const endDate = document.getElementById('endDate').value;
             const endTime = document.getElementById('endTime').value;
 
-            const fromDate = new Date(`${startDate}T${startTime}`);
-            const toDate = new Date(`${endDate}T${endTime}`);
+            const fromTimestamp = getTimestampFromInput(startDate, startTime);
+            const toTimestamp = getTimestampFromInput(endDate, endTime);
 
-            if (fromDate >= toDate) {
-                alert('The "from" date must be earlier than the "to" date.');
+            if (fromTimestamp >= toTimestamp) {
+                alert("Error: The 'from' date must be earlier than the 'to' date.");
                 return;
             }
 
-            const from = Math.floor(fromDate.getTime() / 1000);
-            const to = Math.floor(toDate.getTime() / 1000);
-
-            const totalIntervalMinutes = (to - from) / 60;
+            const totalIntervalMinutes = (toTimestamp - fromTimestamp) / 60;
             const resolutionMinutes = convertResolutionToMinutes(resolution);
             const countback = Math.round(totalIntervalMinutes / resolutionMinutes);
 
-            const url = `https://priceapi.moneycontrol.com/techCharts/indianMarket/stock/history?symbol=${symbol}&resolution=${resolution}&from=${from}&to=${to}&countback=${countback}&currencyCode=INR`;
-            
+            const url = `https://priceapi.moneycontrol.com/techCharts/indianMarket/stock/history?symbol=${symbol}&resolution=${resolution}&from=${fromTimestamp}&to=${toTimestamp}&countback=${countback}&currencyCode=INR`;
             const headers = {
-                "User-Agent": "Mozilla/5.0 (Linux; Android 11.0; Surface Duo) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36"
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
             };
 
-            console.log('Fetching data from URL:', url);
-
             fetch(url, { headers })
-                .then(response => {
-                    console.log('Response status:', response.status);
-                    if (!response.ok) {
-                        console.error('Network response was not ok', response);
-                        throw new Error(`Network response was not ok: ${response.statusText}`);
-                    }
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Received data:', data);
+                    console.log('Fetched data:', data); // Debugging: Log fetched data
                     if (data.s === 'no_data') {
                         alert(`No data available for the stock '${symbol}' in the given date range.`);
                     } else if (data.o && data.h && data.l && data.c && data.v && data.t) {
-                        const labels = data.t.map(timestamp => new Date(timestamp * 1000).toLocaleString());
-                        const openData = data.o;
-                        const highData = data.h;
-                        const lowData = data.l;
-                        const closeData = data.c;
-                        const volumeData = data.v;
+                        const df = {
+                            open: data.o,
+                            high: data.h,
+                            low: data.l,
+                            close: data.c,
+                            volume: data.v,
+                            timestamp: data.t
+                        };
 
-                        const ctx = document.getElementById('stockChart').getContext('2d');
-                        new Chart(ctx, {
-                            type: 'line',
-                            data: {
-                                labels: labels,
-                                datasets: [
-                                    {
-                                        label: 'Open',
-                                        data: openData,
-                                        borderColor: 'rgba(255, 99, 132, 1)',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        pointRadius: 0
-                                    },
-                                    {
-                                        label: 'High',
-                                        data: highData,
-                                        borderColor: 'rgba(54, 162, 235, 1)',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        pointRadius: 0
-                                    },
-                                    {
-                                        label: 'Low',
-                                        data: lowData,
-                                        borderColor: 'rgba(255, 206, 86, 1)',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        pointRadius: 0
-                                    },
-                                    {
-                                        label: 'Close',
-                                        data: closeData,
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        pointRadius: 0
-                                    },
-                                    {
-                                        label: 'Volume',
-                                        data: volumeData,
-                                        borderColor: 'rgba(153, 102, 255, 1)',
-                                        borderWidth: 2,
-                                        fill: false,
-                                        yAxisID: 'y-axis-volume',
-                                        pointRadius: 0
-                                    }
-                                ]
-                            },
-                            options: {
-                                responsive: true,
-                                scales: {
-                                    x: {
-                                        display: true,
-                                        title: {
-                                            display: true,
-                                            text: 'Date',
-                                            color: '#ffffff'
-                                        },
-                                        ticks: {
-                                            maxTicksLimit: 10,
-                                            color: '#ffffff'
-                                        },
-                                        grid: {
-                                            color: 'rgba(255, 255, 255, 0.2)'
-                                        }
-                                    },
-                                    y: {
-                                        display: true,
-                                        title: {
-                                            display: true,
-                                            text: 'Price',
-                                            color: '#ffffff'
-                                        },
-                                        ticks: {
-                                            color: '#ffffff'
-                                        },
-                                        grid: {
-                                            color: 'rgba(255, 255, 255, 0.2)'
-                                        }
-                                    },
-                                    'y-axis-volume': {
-                                        type: 'linear',
-                                        display: true,
-                                        position: 'right',
-                                        title: {
-                                            display: true,
-                                            text: 'Volume',
-                                            color: '#ffffff'
-                                        },
-                                        ticks: {
-                                            color: '#ffffff'
-                                        },
-                                        grid: {
-                                            color: 'rgba(255, 255, 255, 0.2)'
-                                        }
-                                    }
-                                }
+                        const filteredData = {
+                            open: [],
+                            high: [],
+                            low: [],
+                            close: [],
+                            volume: [],
+                            timestamp: []
+                        };
+
+                        for (let i = 0; i < df.timestamp.length; i++) {
+                            if (isWithinTradingHours(df.timestamp[i])) {
+                                filteredData.open.push(df.open[i]);
+                                filteredData.high.push(df.high[i]);
+                                filteredData.low.push(df.low[i]);
+                                filteredData.close.push(df.close[i]);
+                                filteredData.volume.push(df.volume[i]);
+                                filteredData.timestamp.push(df.timestamp[i]);
                             }
-                        });
+                        }
+
+                        console.log('Filtered data:', filteredData); // Debugging: Log filtered data
+                        displayData(filteredData);
+                    } else {
+                        alert("Error: The data received from the API is in an unexpected format.");
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
                     alert('Failed to fetch data. Please try again later.');
                 });
+        }
+
+        function displayData(df) {
+            console.log('Displaying data:', df); // Debugging: Log data to be displayed
+
+            const trace1 = {
+                x: df.timestamp.map(t => new Date(t * 1000)),
+                close: df.close,
+                high: df.high,
+                low: df.low,
+                open: df.open,
+                increasing: { line: { color: '#00FF00', width: 2 } }, // Increased line width
+                decreasing: { line: { color: '#FF0000', width: 2 } }, // Increased line width
+                type: 'candlestick',
+                xaxis: 'x',
+                yaxis: 'y1'
+            };
+
+            const trace2 = {
+                x: df.timestamp.map(t => new Date(t * 1000)),
+                y: df.volume,
+                type: 'bar',
+                name: 'Volume',
+                marker: { color: '#7FDBFF' },
+                xaxis: 'x',
+                yaxis: 'y2'
+            };
+
+            const layout = {
+                title: `Stock Data for ${document.getElementById('symbol').value.toUpperCase()}`,
+                dragmode: 'zoom',
+                showlegend: false,
+                grid: { rows: 2, columns: 1, pattern: 'independent' },
+                xaxis: { rangeslider: { visible: false } },
+                yaxis1: { title: 'Price', domain: [0.15, 1] },
+                yaxis2: { title: 'Volume', domain: [0, 0.15] },
+                margin: { l: 50, r: 50, t: 50, b: 50 },
+                paper_bgcolor: '#1a1a1a',
+                plot_bgcolor: '#1a1a1a',
+                font: { color: '#FFD700' }
+            };
+
+            Plotly.newPlot('stockChart', [trace1, trace2], layout);
+        }
+
+        document.getElementById('stockForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetchData();
         });
     </script>
 </body>
